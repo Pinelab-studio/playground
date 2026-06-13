@@ -5,6 +5,7 @@ import {
     DefaultSearchPlugin,
     VendureConfig,
 } from '@vendure/core';
+import { CustomPricingPlugin } from './plugins/custom-pricing';
 import { customFields } from './custom-fields';
 import { defaultEmailHandlers, EmailPlugin, FileBasedTemplateLoader } from '@vendure/email-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
@@ -83,6 +84,7 @@ export const config: VendureConfig = {
                 changeEmailAddressUrl: 'http://localhost:8080/verify-email-address-change'
             },
         }),
+        CustomPricingPlugin,
         DashboardPlugin.init({
             route: 'dashboard',
             appDir: IS_DEV

@@ -6,19 +6,6 @@
 4. http://localhost:3000/dashboard/
 5. Sanity check: Trigger reindex on catalog page, then check system > Job Queue to see most recently processed message.
 
-* Add the Vendure MCP to your AI
-```json
-{
-  "mcpServers": {
-    "vendure-docs": {
-      "url": "https://docs.vendure.io/mcp"
-    }
-  }
-}
-```
-
-Or alternatively reference the llms.txt in your prompt `https://docs.vendure.io/llms.txt`.
-
 # 1. Generating a migration
 
 * Comment out the existing custom field in `custom-fields.ts`
@@ -47,20 +34,42 @@ Or even further automated:
 
 # 2. Creating a new channel in Vendure
 
-// TODO Customer entity modification
+1. Create 2 extra channels
+2. Create a customer in channel A
+3. Switch to channel B create a customer
+4. Change the name of the customer in Channel B, and switch back to channel A.
 
-// 
+(Note to Martijn: Mention products, and channel assignments)
 
 # 3. Pricing strategies (List price and order based pricing)
 
-// TODO describe cases and insights in how ofter both are called: listprice vs order item price
+1. Activate the plugin
+2. Use the curl commands below to trigger each of the pricing strategies
+3. Implement a cache using `RequestContextCacheService`.
 
-// TODO describe use of requestContextCache (needed?)
+cURL request to fetch a product
+```bash
+curl -X POST http://localhost:3000/shop-api \
+  -H "Content-Type: application/json" \
+  -d '{"query": "query { product(id: 1) { id name variants { id sku priceWithTax currencyCode } } }"}' | jq
+```
 
-// Include CURL request to fetch pricing from variant
-// Include CURL request to check pricing with add-to-cart strategy
+cURL request to add item to order:
+
+```bash
+curl -c /tmp/vendure-cookies.txt -b /tmp/vendure-cookies.txt -X POST http://localhost:3000/shop-api \
+  -H "Content-Type: application/json" \
+  -d '{"query": "mutation { addItemToOrder(productVariantId: 1, quantity: 1) { ... on Order { id lines { id linePriceWithTax productVariant { id sku } } } ... on ErrorResult { errorCode message } } }"}' | jq
+```
+
+> The `-c /tmp/vendure-cookies.txt -b /tmp/vendure-cookies.txt` preserves the session cookie so the order is tracked across requests. Alternatively you can use a client like Yaak or Postman.
+
+(Note to Martijn: Vendure does not know the price will be the same. Custom strategy could change the active tax zone. That is why caching is left to the consumer of the strategy).
+
 
 # 3. React Dashboard component
 
-// Describe creating a complex component overrid: 
+// Describe creating a complex component overrid: Approve order. Custom resolver. Ctx approved by admin
+
+# 4. AI Feature
 
