@@ -6,6 +6,11 @@ import {
     VendureConfig,
 } from '@vendure/core';
 import { CustomPricingPlugin } from './plugins/custom-pricing';
+// B2B demo: order approval workflow (action bar button + "Approved by" block).
+// Enable by uncommenting this import and the `OrderApprovalPlugin` entry below.
+// After enabling, generate a migration for the new `approvedBy` custom field
+// (see README.md "Migrations") and rebuild the dashboard (`npm run build:dashboard`).
+// import { OrderApprovalPlugin } from './plugins/order-approval';
 import { customFields } from './custom-fields';
 import { defaultEmailHandlers, EmailPlugin, FileBasedTemplateLoader } from '@vendure/email-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
@@ -13,6 +18,7 @@ import { DashboardPlugin } from '@vendure/dashboard/plugin';
 import { GraphiqlPlugin } from '@vendure/graphiql-plugin';
 import 'dotenv/config';
 import path from 'path';
+import { OrderApprovalPlugin } from './plugins/order-approval';
 
 const IS_DEV = process.env.APP_ENV === 'dev';
 const serverPort = +process.env.PORT || 3000;
@@ -45,13 +51,18 @@ export const config: VendureConfig = {
         type: 'better-sqlite3',
         // See the README.md "Migrations" section for an explanation of
         // the `synchronize` and `migrations` options.
-        synchronize: false,
+        synchronize: true,
         migrations: [path.join(__dirname, './migrations/*.+(js|ts)')], // Migration definitions
         logging: false,
         database: path.join(__dirname, '../vendure.sqlite'),
     },
     paymentOptions: {
         paymentMethodHandlers: [dummyPaymentHandler],
+    },
+    // ⚠️ DEMO ONLY: directory holding the images referenced by the bundled
+    // demo product CSV (src/demo/products.csv). Used when seeding demo data.
+    importExportOptions: {
+        importAssetsDir: path.join(__dirname, 'demo/images'),
     },
     // When adding or altering custom field definitions, the database will
     // need to be updated. See the "Migrations" section in README.md.
@@ -85,6 +96,7 @@ export const config: VendureConfig = {
             },
         }),
         CustomPricingPlugin,
+        OrderApprovalPlugin,
         DashboardPlugin.init({
             route: 'dashboard',
             appDir: IS_DEV

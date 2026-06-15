@@ -1,5 +1,7 @@
 # Vendure
 
+This is a standard Vendure project created with `npx @vendure/create`. See the official guide for more information: https://docs.vendure.io/current/core/getting-started/installationhttps://docs.vendure.io/current/core/getting-started/installation
+
 1. `npm ci`
 2. `npx vite build`
 3. `npm run dev`
@@ -8,6 +10,7 @@
 
 # 1. Generating a migration
 
+* Set `synchronize: false` in the Vendure-config.
 * Comment out the existing custom field in `custom-fields.ts`
 * Start the server and view a variant in dashboard `http://localhost:3000/dashboard/product-variants/1`
 * Generate a migration `npx vendure migrate`
@@ -69,7 +72,13 @@ curl -c /tmp/vendure-cookies.txt -b /tmp/vendure-cookies.txt -X POST http://loca
 
 # 3. React Dashboard component
 
-// Describe creating a complex component overrid: Approve order. Custom resolver. Ctx approved by admin
+1. Enable the plugin
+2. `npx vite build`
+3. `npm run dev`
+4. Go to the order detail and approve it.
+5. Extend the plugin with an `approvedAt` field.
 
-# 4. AI Feature
+# 4. AI Feature (if we have time)
+
+Any requests?
 
