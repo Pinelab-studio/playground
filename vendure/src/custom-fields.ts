@@ -6,8 +6,9 @@ export const customFields: CustomFields = {
     // ],
 };
 
+// This ensures typescript will see product.customFields.metaDescription as string | undefined
 declare module '@vendure/core' {
     interface CustomProductFields {
-        metaDescription: string | null;
+        metaDescription?: string;
     }
 }
