@@ -26,7 +26,7 @@ This is a standard Vendure project created with `npx @vendure/create`. See the o
 * Introduce a new custom field
 * Generate a migration
 * Review the migration
-* Commit and push and make part of your Pull Request.
+* Commit and push so that its part of your Pull Request.
 
 Treat migration files as if they were code changes: you should always have a human-in-the-loop.
 
