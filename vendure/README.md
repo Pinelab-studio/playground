@@ -11,11 +11,11 @@ This is a standard Vendure project created with `npx @vendure/create`. See the o
 # 1. Generating a migration
 
 * Set `synchronize: false` in the Vendure-config.
-* Comment out the existing custom field in `custom-fields.ts`
+* Enable the custom field in `custom-fields.ts`
 * Start the server and view a variant in dashboard `http://localhost:3000/dashboard/product-variants/1`
 * Generate a migration `npx vendure migrate`
 * Review and run the migration: `npx vendure migrate`
-* Fill out some sample data in a product.
+* Fill out some sample data in the meta description of a product.
 * Change the type to `text` and generate a migration
 * Change the type to `localeString` and generate a migration
 
@@ -38,11 +38,11 @@ Or even further automated:
 # 2. Creating a new channel in Vendure
 
 1. Create 2 extra channels
-2. Create a customer in channel A
-3. Switch to channel B create a customer
-4. Change the name of the customer in Channel B, and switch back to channel A.
-
-(Note to Martijn: Mention products, and channel assignments)
+2. Create a product in channel A
+3. Switch to channel B and create another prodduct.
+4. Switch to the default channel.
+5. Select a product, and assign it to the other channel, so that it is 2 channels.
+6. Change the price and name of the shared product, and view it in the other channel.
 
 # 3. Pricing strategies (List price and order based pricing)
 
@@ -72,7 +72,7 @@ curl -c /tmp/vendure-cookies.txt -b /tmp/vendure-cookies.txt -X POST http://loca
 
 # 3. React Dashboard component
 
-1. Enable the plugin
+1. Enable dashboard extension of the approval plugin
 2. `npx vite build`
 3. `npm run dev`
 4. Go to the order detail and approve it.

@@ -23,10 +23,9 @@ import { OrderApprovalAdminResolver } from './api/order-approval.resolver';
                 name: 'approvedBy',
                 type: 'string',
                 nullable: true,
-                // Set programmatically by the approveOrder mutation, so it is
-                // shown but not editable in the dashboard.
-                readonly: true,
+                internal: false,
                 label: [{ languageCode: LanguageCode.en, value: 'Approved by' }],
+                ui: {dashboard: false}
             },
         ];
         return config;

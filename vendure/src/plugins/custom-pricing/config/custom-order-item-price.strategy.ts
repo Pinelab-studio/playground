@@ -11,7 +11,7 @@ const YELLOW = '\x1b[33m';
 const RESET = '\x1b[0m';
 
 /**
- * Logs in yellow every time an order item price is calculated.
+ * Calculate a price for the order line, when the item is added to cart.
  */
 @Injectable()
 export class CustomOrderItemPriceStrategy implements OrderItemPriceCalculationStrategy {

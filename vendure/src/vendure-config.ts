@@ -6,11 +6,6 @@ import {
     VendureConfig,
 } from '@vendure/core';
 import { CustomPricingPlugin } from './plugins/custom-pricing';
-// B2B demo: order approval workflow (action bar button + "Approved by" block).
-// Enable by uncommenting this import and the `OrderApprovalPlugin` entry below.
-// After enabling, generate a migration for the new `approvedBy` custom field
-// (see README.md "Migrations") and rebuild the dashboard (`npm run build:dashboard`).
-// import { OrderApprovalPlugin } from './plugins/order-approval';
 import { customFields } from './custom-fields';
 import { defaultEmailHandlers, EmailPlugin, FileBasedTemplateLoader } from '@vendure/email-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
@@ -80,22 +75,22 @@ export const config: VendureConfig = {
         DefaultSchedulerPlugin.init(),
         DefaultJobQueuePlugin.init({ useDatabaseForBuffer: true }),
         DefaultSearchPlugin.init({ bufferUpdates: false, indexStockStatus: true }),
-        EmailPlugin.init({
-            devMode: true,
-            outputPath: path.join(__dirname, '../static/email/test-emails'),
-            route: 'mailbox',
-            handlers: defaultEmailHandlers,
-            templateLoader: new FileBasedTemplateLoader(path.join(__dirname, '../static/email/templates')),
-            globalTemplateVars: {
-                // The following variables will change depending on your storefront implementation.
-                // Here we are assuming a storefront running at http://localhost:8080.
-                fromAddress: '"example" <noreply@example.com>',
-                verifyEmailAddressUrl: 'http://localhost:8080/verify',
-                passwordResetUrl: 'http://localhost:8080/password-reset',
-                changeEmailAddressUrl: 'http://localhost:8080/verify-email-address-change'
-            },
-        }),
-        CustomPricingPlugin,
+        // EmailPlugin.init({
+        //     devMode: true,
+        //     outputPath: path.join(__dirname, '../static/email/test-emails'),
+        //     route: 'mailbox',
+        //     handlers: defaultEmailHandlers,
+        //     templateLoader: new FileBasedTemplateLoader(path.join(__dirname, '../static/email/templates')),
+        //     globalTemplateVars: {
+        //         // The following variables will change depending on your storefront implementation.
+        //         // Here we are assuming a storefront running at http://localhost:8080.
+        //         fromAddress: '"example" <noreply@example.com>',
+        //         verifyEmailAddressUrl: 'http://localhost:8080/verify',
+        //         passwordResetUrl: 'http://localhost:8080/password-reset',
+        //         changeEmailAddressUrl: 'http://localhost:8080/verify-email-address-change'
+        //     },
+        // }),
+        // CustomPricingPlugin,
         OrderApprovalPlugin,
         DashboardPlugin.init({
             route: 'dashboard',
